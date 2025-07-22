@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{epsilon-first}{2}{0}{1}
+\beamer@sectionintoc {2}{(Decaying) epsilon-greedy}{9}{0}{2}
+\beamer@sectionintoc {3}{Exploration vs Exploitation}{16}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{22}{0}{4}

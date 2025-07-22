@@ -1,0 +1,18 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Auer, Cesa-Bianchi, and Fischer]{Auer, Cesa-Bianchi, and
+  Fischer}{2002}{auer2002finite}
+\textsc{Auer, P., N.~Cesa-Bianchi,  {\small and} P.~Fischer}  (2002):
+  ``Finite-time analysis of the multiarmed bandit problem,'' \emph{Machine
+  learning}, 47, 235--256.
+
+\end{thebibliography}

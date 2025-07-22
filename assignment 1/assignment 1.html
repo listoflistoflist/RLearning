@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Assignment 1: Multi-Armed Bandit Portfolio</title>
+  <!-- Include MathJax for rendering LaTeX formulas -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1em;
+      overflow-x: auto;
+      border-radius: 4px;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+    }
+    ul, ol {
+      margin-left: 1.5em;
+    }
+    .formula {
+      margin: 1em 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Assignment 1: Multi-Armed Bandit Portfolio</h1>
+<div style="text-align: center;"> <img decoding="async" style="width: 600px; height: auto;" src="ts_success.png" alt="assignment 1: multi-armed bandit portfolio"> <br /><em>Investers seek reward.<br />
+  How much should they put in which stock?<br />
+  When in doubt, be epsilon-greedy (or use Thompson sampling).</em></div>
+
+  <h2>Introduction</h2>
+    <p>In this project, you will implement Multi-Armed Bandit algorithms. You will use first <em>epsilon-greedy</em> (from lecture) to build a portfolio of stocks adaptively at a daily frequency. Then, you will use <em>Thompson Sampling</em> (from lecture) to compare the performance and some properties of the algorithms.</p>
+    <p>The code for this project contains the following files, which are available as a <a href="assigment 1.zip">zip archive</a>.</p>
+
+  <h3>Files you'll edit (if you do not want to use Stata but python):</h3>
+  <ul>
+      <li><code>bbandit_functions.py</code><br />
+      Implements batched multi-armed bandit algorithms (epsilon-greedy with decay and Thompson sampling with optional clipping) for updating and simulation.
+    </li>
+  </ul>
+
+  <h3>Files you should read but NOT edit:</h3>
+  <ul>
+     <li><code>bbandit_initialize.ado</code><br />
+      Initializes adaptive experiments.
+    </li>
+    <li><code>bbandit_update.ado</code><br />
+      Runs adaptive experiments.
+    </li>
+    <li><code>bbandit_sim.ado</code><br />
+      Runs Monte Carlo simulation of many bandit experiments.
+    </li>
+    <li><code>bbandits.ado</code><br />
+      Calculates bandit statistics from a dataset.
+    </li>
+  </ul>
+
+
+  <p><strong>Files to Edit and Submit:</strong> You will collect data adaptively and generate tables and figures during the assignment. You should submit these files with your code and comments. Please send tables and figures in a single pdf or html, e.g., <code>data.csv</code>, <code>assignment_1_solutions.pdf</code>. <em>Please do not change the other files in this distribution or submit any of our original files other than these files.</em></p>
+
+  <p><strong>Commenting:</strong> In this assignment we ask you to provide extensive commenting on the exhibits (data, tables, and figures, code) you generate. For each exhibit that you implement, provide (a) an overall comment that should describe it purpose AND roughly how it was computed, and (b) a per-exhibit comment (table or figure notes), describing very briefly what each exhibit is showing. Each per-exhibit comment can simply be a phrase at the end of your exhibit. However, you are also welcome to add separate comment lines. A portion of the project grade (3 points out of 28) will be based on an inspection of your comments in the submitted files.</p>
+  
+  <p><strong>Stata or Python</strong>
+  EITHER use Stata (easier) OR Python (harder). We will use Python later, so to get an easy start, we recommend Stata. Your choice!</p>
+
+  <p><strong>Getting Help</strong>
+  You are not alone! If you find yourself stuck on something, let us know. We want this project to be rewarding and instructional, not frustrating and demoralizing. But, we don't know when or how to help unless you ask.</p>
+
+  <h2>MAB Portfolios</h2>
+  <p>To get started, collect data on Exchange-Traded Funds (ETFs). ETFs are pooled investment vehicles that trade on stock exchanges much like individual equities. They typically aim to track the performance of a specific index, sector, commodity, or asset class by holding a basket of underlying securities. Build a portfolio of five ETFs with the goal of maximizing total expected profits using Multi-Armed Bandit algorithms. Below are five ETFs across various categories:</p>
+
+  <ul>
+    <li><strong>SPY</strong> seeks to track the performance of the S&amp;P 500 Index, which represents 500 of the largest U.S. companies across all major sectors (e.g., technology, healthcare, financials). It represents large-cap equity.</li>
+    <li><strong>GLD</strong> is designed to reflect the performance of the price of gold bullion. It owns physical gold stored in secure vaults, so each share represents fractional ownership of actual gold bars. It offers a pure precious-metals play and crisis hedge.</li>
+    <li><strong>DBC</strong> aims to track the DBIQ Optimum Yield Diversified Commodity Index Excess Return, which holds a diversified basket of physical commodities (e.g., crude oil, gold, natural gas, copper, corn). It invests via futures contracts rather than physical delivery, rolling those contracts monthly.</li>
+    <li><strong>TIP</strong> gives inflation-linked fixed-income to protect purchasing power over time. It seeks to track the Bloomberg U.S. Treasury Inflation-Protected Securities (TIPS) Index (Series-L), which is composed of U.S. Treasury bonds whose principal adjusts with changes in the Consumer Price Index (CPI).</li>
+    <li><strong>TLT</strong> seeks to track the ICE U.S. Treasury 20+ Year Bond Index, meaning it invests exclusively in U.S. Treasury bonds with maturities of at least 20 years. A long-duration Treasury position for fixed income to profit if rates fall.</li>
+  </ul>
+  
+  You can get daily close prices (adjusted for splits, dividents and distributions) via <code>yfinance</code>.
+
+  <p><strong>Note:</strong> Make sure to have a time line. This is a real-life live experiment!</p>
+
+
+  <h2>Question 1 (5 points): Automatic Portfolio Choice</h2>
+  <p>In each of five trading days, make 200 stock purchases in such a way that your return is maximized. Use the Multi-Armed Bandit algorithm to determine on each of the five days what share of the 200 purchases to allocate to each of the five ETFs. To do this:</p>
+  <ol>
+    <li>Set up an initial dataset that specifies a unique identifier for each purchase. Assign the first 200 purchases to batch 1, the second 200 to batch 2, and so on up to batch 5. With an id for 1000 observations, you can use: <br /><pre><code>bbandit_initialize , batch(5) arms(5) exploration_phase(0)</code></pre></li>
+    <li>Giving all ETFs the same chance, set the shares for each arm uniformly in the first batch. That is, set <code>chosen_arm = 1</code> for the first 40 observations of batch 1, <code>chosen_arm = 2</code> for the next 40 observations, etc.</li>
+  </ol>
+  
+  <p>Because we haven’t observed any rewards yet, the rewards are missing. Use the daily return of the adjusted close prices (corrected for splits, dividends, and distributions) as the success measure. Compute the daily return for day \(t\) as:</p>
+  <div class="formula">
+    \[
+      \text{return}_t \;=\; \frac{\text{Close}_{t} - \text{Close}_{t-1}}{\text{Close}_{t-1}}.
+    \]
+  </div>
+  <p>On each day, you need to use the previous day’s closing price to compute the return. At the end of each trading day, record the reward for each purchase and update the allocation using:</p>
+  <pre><code>bbandit_update reward chosen_arm batch, greedy eps(0.5)</code></pre>
+  <p>Use <code>epsilon = 1/2</code> for batch 2, <code>1/3</code> for batch 3, <code>1/4</code> for batch 4, and <code>1/5</code> for batch 5. Comment on better ways to decay <code>epsilon</code> (e.g., polynomial vs. exponential schedules).</p>
+  The data could look like this:
+      <p style="text-align: center;"><img decoding="async" style="width: 700px; height: auto;" src="data.png" alt="data"></p>
+
+  <p><strong>Grading:</strong> We will check your final dataset, code, dates, closing prices, and the resulting shares after five iterations.</p>
+
+ <h2>Question 2 (2 points): Multi-Armed Bandit Statistics</h2>
+  <p>Create the following visualizations:</p>
+  <ul>
+    <li>A histogram showing the shares with which each arm was selected, aggregated over all batches.</li>
+    <li>A batch-wise line plot of the share (%) of each arm across batches 1 through 5.</li>
+  </ul>
+  
+  This could look like this:
+    <p style="text-align: center;"><img decoding="async" style="width: 400px; height: auto;" src="hist.png" alt="histogram"><img decoding="async" style="width: 400px; height: auto;" src="shares_batches.png" alt="shares_batches"></p>
+
+
+  <p><strong>Grading:</strong> We will check the shares.</p>
+
+ 
+  <h2>Question 3 (1 point): Fixed versus Adaptive versus Best Arm</h2>
+  <p>Compare three portfolio strategies:</p>
+  <ol>
+    <li>A fixed, balanced allocation (20% to each ETF every day).</li>
+    <li>The adaptive Multi-Armed Bandit portfolio allocation from Question 1.</li>
+    <li>The ex-post optimal single ETF (the “best arm”).</li>
+  </ol>
+  <p>Compute the cumulative empirical regret of the Multi-Armed Bandit portfolio relative to both the fixed allocation and the ex-post optimal arm over the five-day period. That is:</p>
+  <div class="formula">
+    \[
+      \text{Regret}_T = \sum_{t=1}^{T} \bigl(\text{Reward}_{\text{optimal},t} - \text{Reward}_{\text{MAB},t}\bigr),
+    \]
+  </div>
+  <p>where \(\text{Reward}_{\text{optimal},t}\) is the reward obtained by the best arm in hindsight on day \(t\) and \(\text{Reward}_{\text{MAB},t}\) is the reward obtained by your Multi-Armed Bandit portfolio on day \(t\).</p>
+  <p><strong>Grading:</strong> We will check that the regret is correct in each case.</p>
+
+
+  <h2>Question 4 (5 points): Thompson Sampling</h2>
+  <p>Convert continuous daily returns into binary rewards by defining:</p>
+  <div class="formula">
+    \[
+      R_t = 
+      \begin{cases}
+        1, & \text{if daily return}_t \ge 0,\\
+        0, & \text{otherwise.}
+      \end{cases}
+    \]
+  </div>
+  <p>Using these binary rewards for the same five-day period, run a Thompson Sampling experiment with the same batches and batch sizes. 
+  <p><strong>Note:</strong> Make sure to blind the rewards already obtained with epsilon-greedy.</p>
+
+  <p>Compare the resulting portfolio allocations to those from epsilon-greedy. Discuss differences in adaptation speed, concentration on the best arm, and stability.</p>
+
+  <p><strong>Grading:</strong> We will run your Thompson Sampling algorithm on the same example.</p>
+
+  
+  <h2>Question 5 (3 points): Thompson Sampling Simulation</h2>
+  <p>Simulate 20 batches of 1 purchase each (i.e., <code>batch(20)</code>, <code>size(1)</code>) with Thompson Sampling using true success probabilities of <code>p_1=0.35</code>, <code>p_2=0.60</code>, and <code>p_2=0.40</code>, no clipping, and <code>plot_thompson</code> and <code>stacked</code> options:</p>
+  <pre><code>bbandit_sim 0.35 0.60 0.40, size(1) batch(20) clipping(0) thompson plot_thompson stacked</code></pre>
+  <p>Plot:</p>
+  <ul>
+    <li>The posterior Beta distributions for batch 1 and 20 for each arm.</li>
+  </ul>
+  <p>Comment on what the flat Beta distributions in batch 1 mean and how quickly the algorithm concentrates on the better arm when <code>p_2=0.60</code>.</p>
+   <p><strong>Hint:</strong>  The variance of the Beta distribution is   \[
+      \mathrm{Var}\bigl[\mathrm{Beta}(\alpha,\beta)\bigr]
+      \;=\;
+      \frac{\alpha\,\beta}{(\alpha + \beta)^2\,(\alpha + \beta + 1)}.
+    \]</p>
+
+  
+  The figures could look like this:
+      <p style="text-align: center;"><img decoding="async" style="width: 400px; height: auto;" src="ts1.png" alt="ts1"><img decoding="async" style="width: 400px; height: auto;" src="ts20.png" alt="ts20"></p>
+
+
+
+  <h2>Question 6 (4 points): Thompson Sampling Simulation Variations</h2>
+  <p>Repeat the above simulation for two arms under different settings:</p>
+  <ol>
+    <li>Clipping rates <code>c=0.05</code> and <code>c=0.45</code>:
+<pre><code>bbandit_sim  0.35 0.6 , size(20) batch(20) clipping(0.45) thompson 
+bbandits reward chosen_arm batch
+
+bbandit_sim  0.35 0.6 , size(20) batch(20) clipping(0.05) thompson 
+bbandits reward chosen_arm batch</code></pre>
+    </li>
+    <li>Batch sizes 20 and 100 (with clipping 0.05):
+<pre><code>bbandit_sim 0.35 0.60, size(20) batch(20) clipping(0.05) thompson  
+bbandits reward chosen_arm batch  
+bbandit_sim 0.35 0.60, size(100) batch(20) clipping(0.05) thompson  
+bbandits reward chosen_arm batch</code></pre>
+    </li>
+    <li>Increase the number of batches to 40 (with size 100 and clipping 0.05):
+      <pre><code>bbandit_sim 0.35 0.60, size(100) batch(40) clipping(0.05) thompson  
+bbandits reward chosen_arm batch</code></pre>
+    </li>
+  </ol>
+  <p>How do the results differ in terms of:</p>
+  <ul>
+    <li>Convergence speed to the best arm?</li>
+    <li>Stability of posterior distributions?</li>
+    <li>Regret over batches?</li>
+  </ul>
+  <p><strong>Grading:</strong> We will run your Thompson Sampling algorithm and check that it learns the same success rates as our reference implementation when each is presented with the same set of examples.</p>
+
+
+<h2>Question 7 (5 points): Non-Stationary Rewards</h2>
+  <p>After batch 10, suppose the true success rate for arm <code>1</code> changes (e.g., from 0.35 to 0.90). Modify your Thompson Sampling algorithm to capture this non-stationarity. Possible approaches include:</p>
+  <ul>
+    <li>Using a sliding window on recent rewards to update Beta parameters.</li>
+    <li>Applying a discount factor \(\gamma\) to old observations:  
+    <div class="formula">
+    \[
+      (\alpha_k, \beta_k)
+      \;=\;
+      \Bigl(
+        \gamma\,\alpha_k,\; \gamma\,\beta_k
+      \Bigr)
+      +
+      \begin{cases}
+        (\,R_t,\,1 - R_t\,), & \text{if chosen arm} = k,\\
+        (\,0,\,0\,), & \text{if chosen arm} \neq k.
+      \end{cases}
+    \]
+  </div>
+  <p>Here, \(0 \le \gamma \le 1\) is a discount factor that down-weights past observations when updating the posterior. For arms not selected at time \(t\), their parameters are simply multiplied by \(\gamma\), reflecting a “forgetting” of older data. For the chosen arm \(k\), you first discount its previous parameters by \(\gamma\), then add the new pseudo-counts \((R_t,\,1 - R_t)\).</p>
+    </li>
+    <li>Resetting priors after a fixed number of batches.</li>
+  </ul>
+  <p>Implement one of these approaches and demonstrate how the algorithm adapts when arm <code>1</code> becomes better after batch 10. Plot the posterior distributions and selection frequencies before and after the change.</p>
+
+
+  <p><em>Congratulations! You have a learning Portfolio agent!</em></p>
+In order to submit your project, please send the following files: <code>data.csv</code>, <code>assignment_1_solutions.pdf</code>.
+</body>
+</html>

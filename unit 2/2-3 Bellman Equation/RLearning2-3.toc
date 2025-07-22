@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Bellman Equation}{2}{0}{1}
+\beamer@sectionintoc {2}{Example: Invest or Save?}{9}{0}{2}
+\beamer@sectionintoc {3}{Endgame Effects}{18}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{23}{0}{4}

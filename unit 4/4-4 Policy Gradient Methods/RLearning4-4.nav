@@ -1,0 +1,65 @@
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\beamer@sectionpages {1}{1}}
+\headcommand {\beamer@subsectionpages {1}{1}}
+\headcommand {\sectionentry {1}{Introduction to Reinforcement Learning}{2}{Introduction to Reinforcement Learning}{0}}
+\headcommand {\slideentry {1}{0}{1}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\slideentry {1}{0}{2}{3/3}{}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\slideentry {1}{0}{3}{4/6}{}{0}}
+\headcommand {\beamer@framepages {4}{6}}
+\headcommand {\beamer@sectionpages {2}{6}}
+\headcommand {\beamer@subsectionpages {2}{6}}
+\headcommand {\sectionentry {2}{Stochastic Gradient Policy}{7}{Stochastic Gradient Policy}{0}}
+\headcommand {\slideentry {2}{0}{1}{7/7}{}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {2}{0}{2}{8/8}{}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\slideentry {2}{0}{3}{9/11}{}{0}}
+\headcommand {\beamer@framepages {9}{11}}
+\headcommand {\slideentry {2}{0}{4}{12/12}{}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\slideentry {2}{0}{5}{13/19}{}{0}}
+\headcommand {\beamer@framepages {13}{19}}
+\headcommand {\slideentry {2}{0}{6}{20/21}{}{0}}
+\headcommand {\beamer@framepages {20}{21}}
+\headcommand {\slideentry {2}{0}{7}{22/31}{}{0}}
+\headcommand {\beamer@framepages {22}{31}}
+\headcommand {\slideentry {2}{0}{8}{32/32}{}{0}}
+\headcommand {\beamer@framepages {32}{32}}
+\headcommand {\beamer@sectionpages {7}{32}}
+\headcommand {\beamer@subsectionpages {7}{32}}
+\headcommand {\sectionentry {3}{REINFORCE Algorithm}{33}{REINFORCE Algorithm}{0}}
+\headcommand {\slideentry {3}{0}{1}{33/33}{}{0}}
+\headcommand {\beamer@framepages {33}{33}}
+\headcommand {\slideentry {3}{0}{2}{34/34}{}{0}}
+\headcommand {\beamer@framepages {34}{34}}
+\headcommand {\beamer@sectionpages {33}{34}}
+\headcommand {\beamer@subsectionpages {33}{34}}
+\headcommand {\sectionentry {4}{Policy Gradient Methods in Practice}{35}{Policy Gradient Methods in Practice}{0}}
+\headcommand {\slideentry {4}{0}{1}{35/35}{}{0}}
+\headcommand {\beamer@framepages {35}{35}}
+\headcommand {\slideentry {4}{0}{2}{36/36}{}{0}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\slideentry {4}{0}{3}{37/38}{}{0}}
+\headcommand {\beamer@framepages {37}{38}}
+\headcommand {\slideentry {4}{0}{4}{39/39}{}{0}}
+\headcommand {\beamer@framepages {39}{39}}
+\headcommand {\beamer@sectionpages {35}{39}}
+\headcommand {\beamer@subsectionpages {35}{39}}
+\headcommand {\sectionentry {5}{References}{40}{References}{0}}
+\headcommand {\slideentry {5}{0}{0}{40/40}{}{0}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\beamer@sectionpages {35}{40}}
+\headcommand {\beamer@subsectionpages {35}{40}}
+\headcommand {\sectionentry {6}{Takeaways}{41}{Takeaways}{0}}
+\headcommand {\slideentry {6}{0}{1}{41/41}{}{0}}
+\headcommand {\beamer@framepages {41}{41}}
+\headcommand {\slideentry {6}{0}{2}{42/42}{}{0}}
+\headcommand {\beamer@framepages {42}{42}}
+\headcommand {\beamer@partpages {1}{42}}
+\headcommand {\beamer@subsectionpages {41}{42}}
+\headcommand {\beamer@sectionpages {41}{42}}
+\headcommand {\beamer@documentpages {42}}
+\headcommand {\gdef \inserttotalframenumber {21}}

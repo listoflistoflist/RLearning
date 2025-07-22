@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: RLearning0-1.aux
+Reallocating 'name_of_file' (item size: 1) to 13 items.
+The style file: Econometrica.bst
+Reallocating 'name_of_file' (item size: 1) to 4 items.
+Database file #1: bib.bib
+Done.
+You've used 7 entries,
+            2327 wiz_defined-function locations,
+            557 strings with 4569 characters,
+and the built_in function-call counts, 3087 in all, are:
+= -- 294
+> -- 167
+< -- 1
++ -- 53
+- -- 48
+* -- 259
+:= -- 622
+add.period$ -- 11
+call.type$ -- 7
+change.case$ -- 40
+chr.to.int$ -- 7
+cite$ -- 7
+duplicate$ -- 118
+empty$ -- 194
+format.name$ -- 58
+if$ -- 593
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 11
+newline$ -- 33
+num.names$ -- 42
+pop$ -- 44
+preamble$ -- 1
+purify$ -- 40
+quote$ -- 0
+skip$ -- 105
+stack$ -- 0
+substring$ -- 119
+swap$ -- 18
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 65
+warning$ -- 0
+while$ -- 33
+width$ -- 0
+write$ -- 94

@@ -1,0 +1,4 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Upper Confidence Bound}{2}{0}{1}
+\beamer@sectionintoc {2}{Exploration vs Exploitation}{19}{0}{2}
+\beamer@sectionintoc {4}{Takeaways}{23}{0}{3}

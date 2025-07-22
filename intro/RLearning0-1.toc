@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Introduction to Reinforcement Learning}{2}{0}{1}
+\beamer@sectionintoc {2}{Applications and Examples}{20}{0}{2}
+\beamer@sectionintoc {3}{Course Overview}{38}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{41}{0}{4}

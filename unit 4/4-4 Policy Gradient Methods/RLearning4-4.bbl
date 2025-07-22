@@ -1,0 +1,27 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Russell and Norvig]{Russell and
+  Norvig}{2016}{russell2016artificial}
+\textsc{Russell, S.~J.,  {\small and} P.~Norvig}  (2016): \emph{Artificial
+  intelligence: a modern approach}. Pearson.
+
+\harvarditem[Sigaud and Buffet]{Sigaud and Buffet}{2013}{sigaud2013markov}
+\textsc{Sigaud, O.,  {\small and} O.~Buffet}  (2013): \emph{Markov decision
+  processes in artificial intelligence}. John Wiley \& Sons, Available at
+  \url{https://zodml.org/sites/default/files/Markov_Decision_Processes_and_Artificial_Intelligence.pdf}.
+
+\harvarditem[Sutton and Barto]{Sutton and Barto}{2018}{sutton2018reinforcement}
+\textsc{Sutton, R.~S.,  {\small and} A.~G. Barto}  (2018): ``Reinforcement
+  learning: An introduction,'' \emph{A Bradford Book}, Available at
+  \url{http://incompleteideas.net/book/the-book-2nd.html}.
+
+\end{thebibliography}

@@ -1,0 +1,540 @@
+\documentclass[11pt,table]{beamer}
+\mode<presentation>
+\usepackage{etex}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{dcolumn}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{bbm}
+\usepackage{amsmath,dsfont,listings}
+\usepackage{amssymb}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{tcolorbox}
+\usepackage[authoryear]{natbib}
+\usepackage{circledsteps}
+\usepackage{qtree}
+
+\usepackage{tikz-layers}
+\usepackage{xfrac}
+\usepackage{ifthen}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{caption}[numbered]
+\usetikzlibrary{decorations.markings,calc,positioning,arrows,shapes.geometric,arrows.meta,shapes.arrows}
+
+\bibliographystyle{Econometrica}
+
+\setbeamersize{text margin right=3.5mm, text margin left=7.5mm}  % text margin
+\setbeamersize{sidebar width left=0cm, sidebar width right=0mm}
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{sidebar left}{}
+
+\definecolor{text-grey}{rgb}{0.45, 0.45, 0.45} % grey text on white background
+\definecolor{bg-grey}{rgb}{0.66, 0.65, 0.60} % grey background (for white text)
+\definecolor{fu-blue}{RGB}{0, 51, 102} % blue text
+\definecolor{fu-green}{RGB}{153, 204, 0} % green text
+\definecolor{fu-red}{RGB}{204, 0, 0} % red text (used by \alert)
+\definecolor{BrewerBlue}{HTML}{377EB8} % Define Brewer Blue
+\definecolor{BrewerRed}{HTML}{E41A1C}  % Define Brewer Red
+
+\setbeamertemplate{frametitle}{%
+    \vskip-30pt \color{text-grey}\large%
+    \begin{minipage}[b][23pt]{\textwidth}%
+    \flushleft\insertframetitle%
+    \end{minipage}%
+}
+
+\setbeamertemplate{navigation symbols}{} 
+
+%%% begin title page
+\setbeamertemplate{title page}{
+\vskip2pt\hfill
+\vskip19pt\hskip3pt
+
+% set the title and the author
+\vskip4pt
+\parbox[top][1.35cm][c]{11cm}{\LARGE\color{text-grey} \textcolor{red1}{RL}earning:\\[1ex] \inserttitle \\[1ex] \small \quad \\[3ex]}
+\vskip17pt
+\parbox[top][1.35cm][c]{11cm}{\small Unit 2-5: \insertsubtitle \\[2ex] \insertauthor \\[1ex]}
+}
+%%% end title page
+
+%%% colors
+\usecolortheme{lily}
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=fu-red}
+\setbeamercolor*{example text}{fg=fu-green}
+\setbeamercolor*{structure}{fg=fu-blue}
+
+\setbeamercolor*{block title}{fg=white,bg=black!50}
+\setbeamercolor*{block title alerted}{fg=white,bg=black!50}
+\setbeamercolor*{block title example}{fg=white,bg=black!50}
+
+\setbeamercolor*{block body}{bg=black!10}
+\setbeamercolor*{block body alerted}{bg=black!10}
+\setbeamercolor*{block body example}{bg=black!10}
+
+\setbeamercolor{bibliography entry author}{fg=fu-blue}
+\setbeamercolor{bibliography entry journal}{fg=text-grey}
+\setbeamercolor{item}{fg=fu-blue}
+\setbeamercolor{navigation symbols}{fg=text-grey,bg=bg-grey}
+%%% end colors
+
+%%% headline
+\setbeamertemplate{headline}{
+\vskip30pt
+}
+%%% end headline
+
+%%% footline
+\newcommand{\footlinetext}{
+%\insertshortinstitute, \insertshorttitle, \insertshortdate
+}
+\setbeamertemplate{footline}{
+\vskip2pt
+\hfill \raisebox{-1pt}{\usebeamertemplate***{navigation symbols}}
+\hfill \insertframenumber\hspace{10pt}
+\vskip4pt
+}
+%%% end footline
+
+%%% settings for listings package
+\lstset{extendedchars=true, showstringspaces=false, basicstyle=\footnotesize\sffamily, tabsize=2, breaklines=true, breakindent=10pt, frame=l, columns=fullflexible}
+\lstset{language=Java} % this sets the syntax highlighting
+\lstset{mathescape=true} % this switches on $...$ substitution in code
+% enables UTF-8 in source code:
+\lstset{literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{\ss}1}
+%%% end listings
+
+\usepackage{concmath}
+\usepackage{xcolor}
+\definecolor{red1}{RGB}{206, 17, 38}
+\definecolor{blue1}{RGB}{16, 118, 208}
+\definecolor{gray1}{RGB}{117, 115, 115}
+\usepackage{hyperref}
+
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Definition}
+
+\title[]{Short guides to reinforcement learning}
+\subtitle[]{Policy Iteration}
+\author[D. Rostam-Afschar]{\textcolor{gray1}{Davud Rostam-Afschar (Uni Mannheim)}}
+\date[]{\today}
+\subject{Econometrics}
+\renewcommand{\footlinetext}{\insertshortinstitute, \insertshorttitle, \insertshortdate}
+\hypersetup{
+    bookmarks=false,
+    unicode=false,
+    pdftoolbar=false,
+    pdffitwindow=true,
+    pdftitle={Reinforcement Learning for Business, Economics, and Social Sciences: \insertsubtitle},
+    pdfauthor={Davud Rostam-Afschar},
+    pdfsubject={Reinforcement Learning},
+    pdfkeywords={reinforcement learning, Policy Iteration},
+    pdfnewwindow=true,
+}
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% --------------------------------------------------- Slide --
+%\begin{frame}
+	%\frametitle{Content}
+	%\tableofcontents[]
+%\end{frame}
+
+\section{Policy Iteration}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{How can we solve for the best policy of each state?}
+\thispagestyle{empty}
+\end{frame}
+}
+
+
+\begin{frame}{Policy Optimization}
+
+\begin{itemize}
+    \item Value iteration
+
+    \begin{itemize}
+    
+\item Optimize value function
+\item Extract induced policy in last step
+ \end{itemize}
+
+ \item Can we directly optimize the policy?
+
+ \begin{itemize}
+      
+ 
+\item Yes, by policy iteration
+ \end{itemize}
+\end{itemize}
+\vspace{5mm}
+
+\footnotesize
+\textbf{Readings: Policy Iteration}\\
+\citet[][section 4.3]{sutton2018reinforcement}
+
+\citet[][sections 6.4-6.5]{puterman2014markov}
+
+\citet[][section 17.3]{russell2016artificial}
+
+    
+\end{frame}
+
+\begin{frame}{Policy Iteration}
+
+    \begin{itemize}
+        \item Alternate between two steps
+
+$$
+\pi_0 \xrightarrow{E} V^{\pi_0} \xrightarrow{I} \pi_1 \xrightarrow{E} V^{\pi_1} \xrightarrow{I} \pi_2 \xrightarrow{E} \cdots \xrightarrow{I} \pi^* \xrightarrow{E} V^{*}
+$$
+
+\begin{enumerate}
+     
+\item \textcolor{red1}{Policy Evaluation}\\
+$$
+V^{\pi}(s)=R(s, \pi(s))+\gamma \sum_{s^{\prime}} \mathbb{P}\left(s^{\prime} \mid s, \pi(s)\right) V^{\pi}\left(s^{\prime}\right) \; \forall s
+$$\\[2ex]
+
+\item \textcolor{red1}{Policy improvement}\\
+$$
+\pi(s) \leftarrow \underset{a}{\operatorname{argmax}} \; R(s, a)+\gamma \sum_{s^{\prime}} \mathbb{P}\left(s^{\prime} \mid s, a\right) V^{\pi}\left(s^{\prime}\right) \; \forall s
+$$
+\end{enumerate}
+    \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Policy Iteration Algorithm}
+
+    \begin{tcolorbox}[colframe=black, boxrule=1pt, sharp corners]
+
+\textcolor{red1}{policyIteration(MDP)}
+
+
+Initialize $\pi_{0}$ to any policy
+
+$n \leftarrow 0$
+
+Repeat
+
+\qquad Eval: $V_{n}=R^{\pi_{n}}+\gamma T^{\pi_{n}} V_{n}$
+
+\qquad Improve: $\pi_{n+1} \leftarrow \operatorname{argmax} \; R^{a}+\gamma T^{a} V_{n}$
+
+\qquad $n \leftarrow n+1$
+
+Until $\pi_{n+1}=\pi_{n}$
+
+Return $\pi_{n}$
+
+    \end{tcolorbox}
+\end{frame}
+
+
+\begin{frame}{Example (Policy Iteration)}
+
+\begin{center}
+\scalebox{0.7}{
+\tikz{
+
+\tikzstyle{mystyle}=[draw=BrewerBlue, circle, inner sep=0pt, minimum size=1.7cm, line width=1pt, fill=BrewerBlue!20!white, align=center, font=\footnotesize,]
+
+\tikzset{>={Latex[length=1.75mm,width=1.25mm]}}
+
+% Circles
+\node[mystyle] (p1) {Poor \&\\Unknown\\$\textcolor{red1}{+0}$};
+\node[mystyle, right=5cm of p1] (p2) {Poor \&\\Famous\\$\textcolor{red1}{+0}$};
+
+\node[mystyle, below=3cm of p1] (r1) {Rich \&\\Unknown\\$\textcolor{red1}{+10}$};
+\node[mystyle] (r2) at (r1-|p2) {Rich \&\\Famous\\$\textcolor{red1}{+10}$};
+
+% Big Arrows
+\begin{scope}[on behind layer]
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.5pt, anchor=west] (p1a) at ($(p1.east)+(-.1,0)$) {\scriptsize I};  
+
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.85pt, anchor=west, rotate=90] (p1s) at ($(p1.north)+(0,-.1)$) {\scriptsize\rotatebox{-90}{S}}; 
+
+%---
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.5pt, anchor=west] (p2a) at ($(p2.east)+(-.1,0)$) {\scriptsize I};  
+
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.85pt, anchor=west, rotate=-90] (p2s) at ($(p2.south)+(0,.1)$) {\scriptsize\rotatebox{90}{S}}; 
+
+%---
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.5pt, anchor=west, rotate=45] (r1a) at ($(r1.45)+(-.1,-.1)$) {\scriptsize I}; 
+
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.5pt, anchor=west, rotate=90+45] (r1s) at ($(r1.90+45)+(.1,-.1)$) {\scriptsize S}; 
+
+%---
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.5pt, anchor=west, rotate=45] (r2a) at ($(r2.45)+(-.1,-.1)$) {\scriptsize I}; 
+
+\node[single arrow, draw=red1, fill=none, minimum width = 16pt, line width=1pt, single arrow head extend=3pt, minimum height=10mm, inner sep=1.5pt, anchor=west, rotate=180] (r2s) at ($(r2.west)+(.1,0)$) {\scriptsize \rotatebox{180}{S}}; 
+\end{scope}
+
+%------Arrows 
+% Loops
+\draw[->] (p1s.20) to[out=150, in=150, looseness=1.75] node[above left=-1mm] {\small $1$} (p1.160);
+
+\draw[->] (p1a.20) to[out=70, in=60, looseness=1.75] node[above] {$\sfrac{1}{2}$} (p1.45);
+
+\draw[->] (p2a.20) to[out=70, in=60, looseness=1.75] node[above] {\small $1$} (p2.90);
+
+\draw[->] (r1s.20) to[out=200, in=-160, looseness=1.75] node[below left=-1mm] {$\sfrac{1}{2}$} (r1.south west);
+
+\draw[->] (r2s.20) to[out=240, in=-120, looseness=1.75] node[below left=-1mm] {$\sfrac{1}{2}$} (r2.-110);
+
+% Direct paths
+\draw[->] (r1s.-20) to[out=120, in=-140, looseness=1] node[left=0mm] {$\sfrac{1}{2}$} (p1.-130);
+
+\draw[->] (r1a.20) to[out=120, in=-90, looseness=1] node[left=0mm] {$\sfrac{1}{2}$} (p1.-90);
+
+\draw[->] (r1a.east) to[out=40, in=180, looseness=1] node[above left=-1mm, pos=.2] {$\sfrac{1}{2}$} (p2.west);
+
+\draw[->] (r2s.east) to[out=180, in=-30, looseness=1] node[above left=-1mm, pos=.2] {$\sfrac{1}{2}$} (r1.south east);
+
+\draw[->] (r2a.east) to[out=60, in=-30, looseness=1] node[above right=0mm, pos=.2] {\small $1$} (p2.south east);
+
+\draw[->] (p2s.-10) to[out=230, in=90+45, looseness=1] node[left=0mm, pos=.5] {$\sfrac{1}{2}$} (r2.north west);
+
+\draw[->] (p2s.-30) to[out=180, in=-45, looseness=1] node[above=0mm, pos=.2] {$\sfrac{1}{2}$} (p1.south east);
+
+\draw[->] (p1a.10) to[out=30, in=90+45, looseness=1] node[above=0mm, pos=.5] {$\sfrac{1}{2}$} (p2.north west);
+
+}
+}
+
+\scriptsize
+   \begin{tabular}{ccccccccc}
+\toprule $\boldsymbol{t}$ & $\boldsymbol{V}(\boldsymbol{P U})$ & $\boldsymbol{\pi}(\boldsymbol{P U})$ & $\boldsymbol{V}(\boldsymbol{P F})$ & $\boldsymbol{\pi}(\boldsymbol{P F})$ & $\boldsymbol{V}(\boldsymbol{R U})$ & $\boldsymbol{\pi}(\boldsymbol{R U})$ & $\boldsymbol{V}(\boldsymbol{R F})$ & $\boldsymbol{\pi}(\boldsymbol{R F})$ \\
+\midrule 0 & 0 & I & 0 & I & 10 & I & 10 & I \\
+ 1 & 31.6 & I & 38.6 & S & 44.0 & S & 54.2 & S \\
+ 2 & 31.6 & I & 38.6 & S & 44.0 & S & 54.2 & S \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+
+
+
+\begin{frame}{Monotonic Improvement}
+
+    \begin{itemize}
+        \item \textbf{Lemma 1:} Let $V_{n}$ and $V_{n+1}$ be successive value functions in policy iteration. Then \textcolor{red1}{$V_{n+1} \geq V_{n}$}.
+\vspace{3mm}
+\pause
+ \item Proof:
+
+\begin{itemize}
+     
+
+\item We know that $H^{*}\left(V_{n}\right) \geq H^{\pi_{n}}\left(V_{n}\right)=\left(V_{n}\right)$\\[2ex]
+\item Let $\pi_{n+1}=\underset{a}{\operatorname{argmax}} \; R^{a}+\gamma T^{a} V_{n}$\\[2ex]
+\item Then $H^{*}\left(V_{n}\right)=R^{\pi_{n+1}}+\gamma T^{\pi_{n+1}} V_{n} \geq V_{n}$\\[2ex]
+\item Rearranging: $R^{\pi_{n+1}} \geq\left(I-\gamma T^{\pi_{n+1}}\right) V_{n}$\\[2ex]
+\item Hence $V_{n+1}=\left(I-\gamma T^{\pi_{n+1}}\right)^{-1} R^{\pi_{n+1}} \geq V_{n}$ 
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Convergence}
+
+\begin{itemize}
+    \item \textbf{Theorem 2:} Policy iteration \textcolor{red1}{converges to $\pi^{*}$ and $V^{*}$} in finitely many iterations when $S$ and $A$ are finite.
+\vspace{3mm}
+\pause
+
+\item Proof:
+
+\begin{itemize}
+     
+
+\item We know that $V_{n+1} \geq V_{n} \quad \forall n$ by Lemma 1.\\[2ex]
+\item Since $A$ and $S$ are finite, there are finitely many policies and therefore the algorithm terminates in finitely many iterations.\\[2ex]
+\item At termination, $\pi_{n}=\pi_{n+1}$ and therefore $V_{n}$ satisfies\\[2ex] Bellman's equation:
+
+$$
+V_{n}=V_{n+1}=\max _{a} R^{a}+\gamma T^{a} V_{n}
+$$ 
+\end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Complexity}
+
+    \begin{itemize}
+        \item Value Iteration:
+
+        \begin{itemize}
+             
+        
+\item Cost per iteration: $\textcolor{red1}{\mathcal{O}\left(|S|^{2}|A|\right)}$
+\item Many iterations: \textcolor{red1}{linear convergence}
+\end{itemize}
+\vspace{3mm}
+\item Policy Iteration:
+
+\begin{itemize}
+     
+
+\item Cost per iteration: $\textcolor{red1}{\mathcal{O}\left(|S|^{3}+|S|^{2}|A|\right)}$
+\item Few iterations: \textcolor{red1}{(early) linear, (late) quadratic convergence}
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Modified Policy Iteration Algorithm}
+
+\begin{itemize}
+    \item Alternate between two steps
+\begin{enumerate}
+\item  \textcolor{red1}{\textbf{Partial} Policy evaluation}\\
+Repeat \textcolor{red1}{$k$ times}:\\
+$$
+V^{\pi}(s)=R(s, \pi(s))+\gamma \sum_{s^{\prime}} \mathbb{P}\left(s^{\prime} \mid s, \pi(s)\right) V^{\pi}\left(s^{\prime}\right) \; \forall s
+$$
+\vspace{3mm}
+\item  \textcolor{red1}{Policy improvement}\\
+$$
+\pi(s) \leftarrow \underset{a}{\operatorname{argmax}} \; R(s, a)+\gamma \sum_{s^{\prime}} \mathbb{P}\left(s^{\prime} \mid s, a\right) V^{\pi}\left(s^{\prime}\right) \; \forall s
+$$
+\end{enumerate}
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Modified Policy Iteration Algorithm}
+
+\begin{tcolorbox}[colframe=black, boxrule=1pt, sharp corners]
+
+\textcolor{red1}{modifiedPolicylteration(MDP)}
+
+
+Initialize $\pi_{0}$ and $V_{0}$ to anything
+
+$n \leftarrow 0$
+
+Repeat
+
+\qquad Eval: Repeat $k$ times
+
+\qquad$V_{n} \leftarrow R^{\pi_{n}}+\gamma T^{\pi_{n}} V_{n}$
+
+\qquad Improve: $\pi_{n+1} \leftarrow \underset{a}{\operatorname{argmax}} \; R^{a}+\gamma T^{a} V_{n}$
+
+\qquad $V_{n+1} \leftarrow \max _{a} R^{a}+\gamma T^{a} V_{n}$
+
+\qquad $n \leftarrow n+1$
+
+Until $\left\|V_{n}-V_{n-1}\right\|_{\infty} \leq \epsilon$
+
+Return $\pi_{n}$
+
+\end{tcolorbox}
+    
+\end{frame}
+
+\begin{frame}{Convergence}
+
+\begin{itemize}
+    \item Same convergence guarantees as value iteration:
+
+    \begin{itemize}
+         
+    
+\item Value function \textcolor{red1}{$V_{n}: \quad\left\|V_{n}-V^{*}\right\|_{\infty} \leq \frac{\epsilon}{1-\gamma}$}
+\item Value function $V^{\pi_{n}}$ of policy $\pi_{n}$:
+
+$$
+\textcolor{red1}{\left\|V^{\pi_{n}}-V^{*}\right\|_{\infty} \leq \frac{2 \epsilon}{1-\gamma}}
+$$
+
+\item Proof: somewhat complicated \citet[see][section 6.5]{puterman2014markov} 
+\end{itemize}
+   \end{itemize} 
+\end{frame}
+
+\begin{frame}{Complexity}
+
+\begin{itemize}
+    \item Value Iteration:
+
+    \begin{itemize}
+         
+    
+\item Each iteration: \textcolor{red1}{$\mathcal{O}\left(|S|^{2}|A|\right)$}
+\item Many iterations: \textcolor{red1}{linear convergence}
+\end{itemize}
+\vspace{3mm} \pause
+\item Policy Iteration:
+
+\begin{itemize}
+     
+
+\item Each iteration: \textcolor{red1}{$\mathcal{O}\left(|S|^{3}+|S|^{2}|A|\right)$}
+\item Few iterations: \textcolor{red1}{linear-quadratic convergence}
+\end{itemize}
+\vspace{3mm} \pause
+\item Modified Policy Iteration:
+
+\begin{itemize}
+     
+
+\item Each iteration: \textcolor{red1}{$\mathcal{O}\left(k|S|^{2}+|S|^{2}|A|\right)$}
+\item Few iterations: \textcolor{red1}{linear-quadratic convergence}
+\end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[t,allowframebreaks
+]%\nocite{*}
+\frametitle{References}
+\small
+\bibliography{bib}
+\end{frame}
+\section{Takeaways}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{Takeaways}
+\thispagestyle{empty}
+\end{frame}
+}
+
+\begin{frame}{How Does Policy Iteration Work?}
+\begin{itemize}
+  \item Alternates policy evaluation and improvement, ensuring monotonic value gains
+  \item Converges in finite steps for finite MDPs to the optimal policy and value
+  \item Modified policy iteration trades off full evaluation for efficiency
+  \item Fewer iterations than value iteration, but each is costlier
+\end{itemize}
+\end{frame}
+
+
+\end{document}

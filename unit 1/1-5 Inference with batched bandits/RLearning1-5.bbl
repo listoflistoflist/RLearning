@@ -1,0 +1,34 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Kasy and Sautmann]{Kasy and Sautmann}{2021}{Kasy2021}
+\textsc{Kasy, M.,  {\small and} A.~Sautmann}  (2021): ``Adaptive Treatment
+  Assignment in Experiments for Policy Choice,'' \emph{Econometrica}, 89(1),
+  113--132.
+
+\harvarditem[Kemper and Rostam-Afschar]{Kemper and
+  Rostam-Afschar}{2025}{Kemper2025}
+\textsc{Kemper, J.,  {\small and} D.~Rostam-Afschar}  (2025): ``Earning While
+  Learning: How to Run Batched Bandit Experiments,'' University of Mannheim.
+
+\harvarditem[Offer-Westort, Coppock, and Green]{Offer-Westort, Coppock, and
+  Green}{2021}{Offer2021}
+\textsc{Offer-Westort, M., A.~Coppock,  {\small and} D.~P. Green}  (2021):
+  ``Adaptive Experimental Design: Prospects and Applications in Political
+  Science,'' \emph{American Journal of Political Science}, 65(4), 826--844.
+
+\harvarditem[Zhang, Janson, and Murphy]{Zhang, Janson, and
+  Murphy}{2020}{Zhangetal2020}
+\textsc{Zhang, K., L.~Janson,  {\small and} S.~Murphy}  (2020): ``Inference for
+  Batched Bandits,'' \emph{Advances in neural information processing systems},
+  33, 9818--9829.
+
+\end{thebibliography}

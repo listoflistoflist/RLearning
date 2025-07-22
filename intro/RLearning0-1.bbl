@@ -1,0 +1,45 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Charpentier, Élie, and Remlinger]{Charpentier, Élie, and
+  Remlinger}{2023}{Charpentier2023}
+\textsc{Charpentier, A., R.~Élie,  {\small and} C.~Remlinger}  (2023):
+  ``{Reinforcement learning in economics and finance},'' \emph{Computational
+  Economics}, 62(1), 425--462.
+
+\harvarditem[Goodfellow]{Goodfellow}{2016}{goodfellow2016deep}
+\textsc{Goodfellow, I.}  (2016): \emph{Deep learning}, vol. 196. MIT press,
+  Available at \url{http://deeplearningbook.org/}.
+
+\harvarditem[Puterman]{Puterman}{2014}{puterman2014markov}
+\textsc{Puterman, M.~L.}  (2014): \emph{Markov decision processes: discrete
+  stochastic dynamic programming}. John Wiley \& Sons.
+
+\harvarditem[Russell and Norvig]{Russell and
+  Norvig}{2016}{russell2016artificial}
+\textsc{Russell, S.~J.,  {\small and} P.~Norvig}  (2016): \emph{Artificial
+  intelligence: a modern approach}. Pearson.
+
+\harvarditem[Schulz and Bhui]{Schulz and Bhui}{2024}{Schulz2024}
+\textsc{Schulz, L.,  {\small and} R.~Bhui}  (2024): ``Political reinforcement
+  learners,'' \emph{Trends in Cognitive Sciences}, 28(3), 210--222.
+
+\harvarditem[Sutton and Barto]{Sutton and Barto}{2018}{sutton2018reinforcement}
+\textsc{Sutton, R.~S.,  {\small and} A.~G. Barto}  (2018): ``Reinforcement
+  learning: An introduction,'' \emph{A Bradford Book}, Available at
+  \url{http://incompleteideas.net/book/the-book-2nd.html}.
+
+\harvarditem[Szepesv{\'a}ri]{Szepesv{\'a}ri}{2022}{szepesvari2022algorithms}
+\textsc{Szepesv{\'a}ri, C.}  (2022): \emph{Algorithms for reinforcement
+  learning}. Springer nature, Available at
+  \url{https://sites.ualberta.ca/~szepesva/RLBook.html}.
+
+\end{thebibliography}

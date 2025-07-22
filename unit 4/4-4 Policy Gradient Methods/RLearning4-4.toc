@@ -1,0 +1,6 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Introduction to Reinforcement Learning}{2}{0}{1}
+\beamer@sectionintoc {2}{Stochastic Gradient Policy}{7}{0}{2}
+\beamer@sectionintoc {3}{REINFORCE Algorithm}{33}{0}{3}
+\beamer@sectionintoc {4}{Policy Gradient Methods in Practice}{35}{0}{4}
+\beamer@sectionintoc {6}{Takeaways}{41}{0}{5}

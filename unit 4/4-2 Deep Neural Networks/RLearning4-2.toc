@@ -1,0 +1,4 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Deep Neural Networks}{2}{0}{1}
+\beamer@sectionintoc {2}{Vanishing Gradients}{9}{0}{2}
+\beamer@sectionintoc {4}{Takeaways}{18}{0}{3}

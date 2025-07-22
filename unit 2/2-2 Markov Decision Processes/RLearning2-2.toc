@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Markov Decision Processes}{2}{0}{1}
+\beamer@sectionintoc {2}{(Discounted) Rewards and Values}{8}{0}{2}
+\beamer@sectionintoc {3}{Policies to Max Expected Utility}{13}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{18}{0}{4}

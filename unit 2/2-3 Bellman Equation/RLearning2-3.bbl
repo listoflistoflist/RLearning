@@ -1,0 +1,16 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Bellman]{Bellman}{1957}{bellman1957dynamic}
+\textsc{Bellman, R.}  (1957): \emph{Dynamic Programming}. Princeton University
+  Press.
+
+\end{thebibliography}

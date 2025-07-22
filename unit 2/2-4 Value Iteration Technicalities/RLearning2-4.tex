@@ -1,0 +1,868 @@
+\documentclass[11pt,table]{beamer}
+\mode<presentation>
+\usepackage{etex}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{dcolumn}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{bbm}
+\usepackage{amsmath,dsfont,listings}
+\usepackage{amssymb}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage{tcolorbox}
+\usepackage[authoryear]{natbib}
+\usepackage{circledsteps}
+\usepackage{qtree}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains}
+\usetikzlibrary{arrows.meta,calc,decorations.markings,math}
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{caption}[numbered]
+
+\bibliographystyle{Econometrica}
+
+\setbeamersize{text margin right=3.5mm, text margin left=7.5mm}  % text margin
+\setbeamersize{sidebar width left=0cm, sidebar width right=0mm}
+\setbeamertemplate{sidebar right}{}
+\setbeamertemplate{sidebar left}{}
+
+\definecolor{text-grey}{rgb}{0.45, 0.45, 0.45} % grey text on white background
+\definecolor{bg-grey}{rgb}{0.66, 0.65, 0.60} % grey background (for white text)
+\definecolor{fu-blue}{RGB}{0, 51, 102} % blue text
+\definecolor{fu-green}{RGB}{153, 204, 0} % green text
+\definecolor{fu-red}{RGB}{204, 0, 0} % red text (used by \alert)
+\definecolor{BrewerBlue}{HTML}{377EB8} % Define Brewer Blue
+\definecolor{BrewerRed}{HTML}{E41A1C}  % Define Brewer Red
+
+\setbeamertemplate{frametitle}{%
+    \vskip-30pt \color{text-grey}\large%
+    \begin{minipage}[b][23pt]{\textwidth}%
+    \flushleft\insertframetitle%
+    \end{minipage}%
+}
+
+\setbeamertemplate{navigation symbols}{} 
+
+%%% begin title page
+\setbeamertemplate{title page}{
+\vskip2pt\hfill
+\vskip19pt\hskip3pt
+
+% set the title and the author
+\vskip4pt
+\parbox[top][1.35cm][c]{11cm}{\LARGE\color{text-grey} \textcolor{red1}{RL}earning:\\[1ex] \inserttitle \\[1ex] \small \quad \\[3ex]}
+\vskip17pt
+\parbox[top][1.35cm][c]{11cm}{\small Unit 2-4: \insertsubtitle \\[2ex] \insertauthor \\[1ex]}
+}
+%%% end title page
+
+%%% colors
+\usecolortheme{lily}
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=fu-red}
+\setbeamercolor*{example text}{fg=fu-green}
+\setbeamercolor*{structure}{fg=fu-blue}
+
+\setbeamercolor*{block title}{fg=white,bg=black!50}
+\setbeamercolor*{block title alerted}{fg=white,bg=black!50}
+\setbeamercolor*{block title example}{fg=white,bg=black!50}
+
+\setbeamercolor*{block body}{bg=black!10}
+\setbeamercolor*{block body alerted}{bg=black!10}
+\setbeamercolor*{block body example}{bg=black!10}
+
+\setbeamercolor{bibliography entry author}{fg=fu-blue}
+\setbeamercolor{bibliography entry journal}{fg=text-grey}
+\setbeamercolor{item}{fg=fu-blue}
+\setbeamercolor{navigation symbols}{fg=text-grey,bg=bg-grey}
+%%% end colors
+
+%%% headline
+\setbeamertemplate{headline}{
+\vskip30pt
+}
+%%% end headline
+
+%%% footline
+\newcommand{\footlinetext}{
+%\insertshortinstitute, \insertshorttitle, \insertshortdate
+}
+\setbeamertemplate{footline}{
+\vskip2pt
+\hfill \raisebox{-1pt}{\usebeamertemplate***{navigation symbols}}
+\hfill \insertframenumber\hspace{10pt}
+\vskip4pt
+}
+%%% end footline
+
+%%% settings for listings package
+\lstset{extendedchars=true, showstringspaces=false, basicstyle=\footnotesize\sffamily, tabsize=2, breaklines=true, breakindent=10pt, frame=l, columns=fullflexible}
+\lstset{language=Java} % this sets the syntax highlighting
+\lstset{mathescape=true} % this switches on $...$ substitution in code
+% enables UTF-8 in source code:
+\lstset{literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{\ss}1}
+%%% end listings
+
+\usepackage{concmath}
+\usepackage{xcolor}
+\definecolor{red1}{RGB}{206, 17, 38}
+\definecolor{blue1}{RGB}{16, 118, 208}
+\definecolor{gray1}{RGB}{117, 115, 115}
+\usepackage{hyperref}
+
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Definition}
+
+\title[]{Short guides to reinforcement learning}
+\subtitle[]{Value Iteration: Technicalities}
+\author[D. Rostam-Afschar]{\textcolor{gray1}{Davud Rostam-Afschar (Uni Mannheim)}}
+\date[]{\today}
+\subject{Econometrics}
+\renewcommand{\footlinetext}{\insertshortinstitute, \insertshorttitle, \insertshortdate}
+\hypersetup{
+    bookmarks=false,
+    unicode=false,
+    pdftoolbar=false,
+    pdffitwindow=true,
+    pdftitle={Reinforcement Learning for Business, Economics, and Social Sciences: \insertsubtitle},
+    pdfauthor={Davud Rostam-Afschar},
+    pdfsubject={Reinforcement Learning},
+    pdfkeywords={reinforcement learning, Value Iteration},
+    pdfnewwindow=true,
+}
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% --------------------------------------------------- Slide --
+%\begin{frame}
+	%\frametitle{Content}
+	%\tableofcontents[]
+%\end{frame}
+
+
+\section{Value Iteration}
+
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{Solving for state-value functions\\ in a system of linear equations}
+\thispagestyle{empty}
+\end{frame}
+}
+
+
+
+\begin{frame}{Value Iteration}
+
+\begin{itemize}
+\item Idea: Optimize value function and then induce a policy
+
+ \item Convergence properties of
+
+\begin{itemize}
+\item Policy evaluation
+\item Value iteration
+\end{itemize}
+\end{itemize}
+\vspace{5mm}
+
+
+\footnotesize
+\textbf{Readings: Value Iteration}\\
+\citet[][sections 4.1, 4.4]{sutton2018reinforcement}
+
+\citet[][sections 2.2, 2.3]{szepesvari2022algorithms}
+
+\citet[][sections 6.1-6.3]{puterman2014markov}
+
+\citet[][chapter 1]{sigaud2013markov}
+
+
+    
+\end{frame}
+
+\begin{frame}{Value Iteration Algorithm}
+
+    \begin{tcolorbox}[colframe=black, boxrule=1pt, sharp corners]
+\textcolor{red1}{valueIteration(MDP)}\\
+$V_{0}^{*}(s) \leftarrow \max _{a} R(s, a) \; \forall s$\\
+
+For $t=1$ to $h$ do\\
+\hspace*{5mm} $
+V_{t}^{*}(s) \leftarrow \max _{a} R(s, a)+\gamma \sum_{S^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) V_{t-1}^{*}\left(s^{\prime}\right)  \; \forall s
+$\\
+
+Return $V^{*}$
+\end{tcolorbox}
+
+\pause
+Optimal policy $\textcolor{red1}{\pi^{*}}$
+
+$t=0: \pi_{0}^{*}(s) \leftarrow \underset{a}{\operatorname{argmax}} \; R(s, a) \; \forall s$\\
+\pause
+$t>0: \pi_{t}^{*}(s) \leftarrow \underset{a}{\operatorname{argmax}} \; R(s, a)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) V_{t-1}^{*}\left(s^{\prime}\right) \; \forall s$\\
+\pause
+
+NB: $t$ indicates the \# of time steps to go (till end of process)\\ $\pi^{*}$ is \textcolor{red1}{non stationary} (i.e., time dependent)
+\end{frame}
+
+\begin{frame}{Value Iteration Example}
+%\vspace{-10mm}
+\begin{itemize}
+    \item Matrix form: 
+
+    \begin{itemize}
+        \item[] $\textcolor{red1}{R^{a}}:|S| \times 1$ column vector of rewards for $a$ 
+        
+        \item[]$\textcolor{red1}{V_{t}^{*}}:|S| \times 1$ column vector of state values 
+        
+        \item[]$\textcolor{red1}{T^{a}}:|S| \times|S|$ matrix of transition prob. for $a$ 
+    \end{itemize}
+    \vspace{3mm}
+		Two-state, two-action Markov Decision Process\\
+    \vspace{3mm}
+    $
+\begin{array}{rcc}
+&s_{1}^{\prime} & s_{2}^{\prime} \\
+T^{a_{1}}=s_{1} & \textcolor{fu-green}{0.3} & \textcolor{fu-green}{0.7} \\
+s_{2} & \textcolor{fu-green}{0.8} & \textcolor{fu-green}{0.2}
+\end{array}
+$
+    \qquad $\begin{array}{rcc}
+&s_{1}^{\prime} & s_{2}^{\prime} \\
+T^{a_{2}}=s_{1} & \textcolor{blue}{0.7} & \textcolor{blue}{0.3} \\
+s_{2} & \textcolor{blue}{0.2} & \textcolor{blue}{0.8}
+\end{array}$
+
+\vspace{3mm}
+$
+R^{a_{1}}=\begin{array}{cc}
+s_{1} & \textcolor{fu-green}{0} \\
+s_{2} & \textcolor{fu-green}{10}
+\end{array}
+$
+\qquad \qquad \quad
+$
+R^{a_{2}}=\begin{array}{cc}
+s_{1} & \textcolor{blue}{-5} \\
+s_{2} & \textcolor{blue}{5}
+\end{array}
+$
+\end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Value Iteration Example}
+%\vspace{-20mm}
+\begin{itemize}
+    \item Matrix form: 
+
+    \begin{itemize}
+        \item[] $\textcolor{red1}{R^{a}}:|S| \times 1$ column vector of rewards for $a$ 
+        
+        \item[]$\textcolor{red1}{V_{t}^{*}}:|S| \times 1$ column vector of state values 
+        
+        \item[]$\textcolor{red1}{T^{a}}:|S| \times|S|$ matrix of transition prob. for $a$ 
+    \end{itemize}
+    \end{itemize}
+    \vspace{5mm}
+$$
+\max R^{a}+\gamma T^{a} V_{t-1}^{*}
+$$
+
+%\hspace{-6mm}
+
+\begin{align}
+& \max _{\operatorname{ }}\bigg\{\left(\begin{array}{c}
+\textcolor{fu-green}{0} \\
+\textcolor{fu-green}{10}
+\end{array}\right)+0.9\left(\begin{array}{ll}
+\textcolor{fu-green}{0.3} & \textcolor{fu-green}{0.7} \\
+\textcolor{fu-green}{0.8} & \textcolor{fu-green}{0.2}
+\end{array}\right)\left(\begin{array}{l}
+V^{*}\left(s_{1}\right) \\
+V^{*}\left(s_{2}\right)
+\end{array}\right),\nonumber\\[2ex] \nonumber & \left(\begin{array}{c}
+\textcolor{blue}{-5} \\
+\textcolor{blue}{5}
+\end{array}\right)+0.9\left(\begin{array}{cc}
+\textcolor{blue}{0.7} & \textcolor{blue}{0.3} \\
+\textcolor{blue}{0.2} & \textcolor{blue}{0.8}
+\end{array}\right)\left(\begin{array}{l}
+V^{*}\left(s_{1}\right) \\
+V^{*}\left(s_{2}\right)
+\end{array}\right)\bigg\}
+\end{align}
+
+
+
+\end{frame}
+
+\begin{frame}{Value Iteration}
+
+   \begin{itemize}
+    \item Matrix form: 
+
+    \begin{itemize}
+        \item[] $\textcolor{red1}{R^{a}}:|S| \times 1$ column vector of rewards for $a$ 
+        
+        \item[]$\textcolor{red1}{V_{t}^{*}}:|S| \times 1$ column vector of state values 
+        
+        \item[]$\textcolor{red1}{T^{a}}:|S| \times|S|$ matrix of transition prob. for $a$ 
+    \end{itemize}
+    \end{itemize} 
+
+\begin{tcolorbox}[colframe=black, boxrule=1pt, sharp corners]
+\textcolor{red1}{valueIteration(MDP)}\\
+$
+V_{0}^{*} \leftarrow \max _{a} R^{a}
+$\\
+
+For $T=1$ to $h$ do\\
+\hspace*{5mm} $
+V_{t}^{*} \leftarrow \max _{a} R^{a}+\gamma T^{a} V_{t-1}^{*}
+$\\
+
+Return $V^{*}$
+
+\end{tcolorbox}
+    
+\end{frame}
+
+\begin{frame}{Infinite Horizon}
+
+\begin{itemize}
+    \item Let $\textcolor{red1}{h \rightarrow \infty}$
+
+\item Then $\textcolor{red1}{V_{h}^{\pi} \rightarrow V_{\infty}^{\pi}}$ and $\textcolor{red1}{V_{h-1}^{\pi} \rightarrow V_{\infty}^{\pi}}$\\[2ex]
+
+\item \textbf{Policy evaluation:}
+
+$$
+V_{\infty}^{\pi}(s)=R\left(s, \pi_{\infty}(s)\right)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, \pi_{\infty}(s)\right) V_{\infty}^{\pi}\left(s^{\prime}\right) \; \forall s
+$$
+
+\item \textbf{Bellman's equation:}
+
+$$
+V_{\infty}^{*}(s)=\max _{a} R(s, a)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) V_{\infty}^{*}\left(s^{\prime}\right)
+$$
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Policy Evaluation}
+
+\begin{itemize}
+\item  Linear system of equations
+
+
+$$
+V_{\infty}^{\pi}(s)=R\left(s, \pi_{\infty}(s)\right)+\gamma \sum_{s \prime} \operatorname{Pr}\left(s^{\prime} \mid s, \pi_{\infty}(s)\right) V_{\infty}^{\pi}\left(s^{\prime}\right) \forall s
+$$
+
+\item Matrix form:
+
+    \begin{itemize}
+        \item[] $\textcolor{red1}{R}:|S| \times 1$ column vector of state rewards for $\pi$
+				\item[] $\textcolor{red1}{V}:|S| \times 1$ column vector of state values for $\pi$
+				\item[] $\textcolor{red1}{T}:|S| \times|S|$ matrix of transition prob for $\pi$
+    \end{itemize}
+
+\vspace{3mm}
+
+(Non-optimal) policy $\pi\left(s_{1}\right)=\textcolor{fu-green}{a_{1}} ; \pi\left(s_{2}\right)=\textcolor{blue}{a_{2}}$
+
+$$
+T^{\pi}=\begin{array}{ccc}
+ & s_{1}^{\prime} & s_{2}^{\prime} \\
+s_{1} & \textcolor{fu-green}{0.3} & \textcolor{fu-green}{0.7} \\
+s_{2} & \textcolor{blue}{0.2} & \textcolor{blue}{0.8}
+\end{array} \quad \quad R^{\pi}=\begin{array}{cc}
+s_{1} & \textcolor{fu-green}{0} \\
+s_{2} & \textcolor{blue}{5}
+\end{array}
+$$
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Policy Evaluation}
+
+\begin{itemize}
+\item  Linear system of equations
+
+
+$$
+V_{\infty}^{\pi}(s)=R\left(s, \pi_{\infty}(s)\right)+\gamma \sum_{s \prime} \operatorname{Pr}\left(s^{\prime} \mid s, \pi_{\infty}(s)\right) V_{\infty}^{\pi}\left(s^{\prime}\right) \forall s
+$$
+
+\item Matrix form:
+
+    \begin{itemize}
+        \item[] $\textcolor{red1}{R}:|S| \times 1$ column vector of state rewards for $\pi$
+				\item[] $\textcolor{red1}{V}:|S| \times 1$ column vector of state values for $\pi$
+				\item[] $\textcolor{red1}{T}:|S| \times|S|$ matrix of transition prob for $\pi$
+    \end{itemize}
+
+\vspace{3mm}
+
+(Non-optimal) policy $\pi\left(s_{1}\right)=a_{1} ; \pi\left(s_{2}\right)=a_{2}$
+
+$$
+V=R+\gamma TV
+$$
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Solving Linear Equations}
+
+\begin{itemize}
+    \item Linear system: $\textcolor{red1}{V=R+\gamma T V}$
+
+
+\item Gaussian elimination: $\textcolor{red1}{(I-\gamma T) V=R}$
+
+\item Compute inverse: $\textcolor{red1}{V=(I-\gamma T)^{-1} R}$
+
+\item Iterative methods
+\begin{itemize}
+     
+ \item Value iteration (a.k.a. Richardson iteration)
+\item Repeat $\textcolor{red1}{V \leftarrow R+\gamma T V}$ 
+\end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+\section{Shrinking the Distance}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{With whatever estimate of the value function we start,\\ ... \\ we shrink the distance with the discount factor}
+\thispagestyle{empty}
+\end{frame}
+}
+
+
+
+\begin{frame}{Contraction: Transform with $H$ to Shrink the Maxnorm Distance}
+\begin{figure}
+	\centering
+\begin{tikzpicture}[line width=1.5pt]
+\draw[{Stealth[length=0.3cm, width=0.3cm]}-{Stealth[length=0.3cm, width=0.3cm]}] (0,6)node[above] {\large $V_{s_2}$} --(0,0) --(9,0) node[right] {\large $V_{s_1}$};
+\draw (-0.5,2)node[left]{$\widetilde{V}$} -- (1.5,4) node[above]{$V$};
+\draw[densely dashed,gray] (-0.5,2)--(1.5,2)  node[below,black,pos=0.8] {$\|\widetilde{V}-V\|_{\infty}$}--(1.5,4);
+
+\begin{scope}[shift={(5,1.5)},scale=0.5]
+\draw (-0.5,2)node[left]{$H(\widetilde{V})$} -- (1.5,4) node[above]{$H(V)$};
+\draw[densely dashed,gray] (-0.5,2)--(1.5,2)--(1.5,4);
+\draw[gray] (0.75,2)--(1,1.2);
+\end{scope}
+\node[below] at (6.4,2) {$\|H(\widetilde{V})-H(V)\|_{\infty}$};
+\end{tikzpicture}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Contraction}
+
+\begin{itemize}
+    \item  Let $\textcolor{red1}{H(V) \equiv R+\gamma T V}$ be the policy evaluation operator 
+    
+    \item \textbf{Lemma 1}: $H$ is a \textcolor{red1}{contraction mapping}.
+
+$$
+\textcolor{red1}{\|H(\tilde{V})-H(V)\|_{\infty} \leq \gamma\|\tilde{V}-V\|_{\infty}}
+$$\\[2ex]
+
+\pause
+
+\item Proof $\|H(\tilde{V})-H(V)\|_{\infty}$
+$$
+\hspace{-4mm}\begin{array}{lc}
+=\|R+\gamma T \tilde{V}-R-\gamma T V\|_{\infty} & \text { (by definition) } \\[2ex]
+=\|\gamma T(\tilde{V}-V)\|_{\infty} & \quad \text { (simplification) } \\[2ex]
+\leq \gamma\|T\|_{\infty}\|\tilde{V}-V\|_{\infty} & (\text{since }\|A B\| \leq\|A\|\|B\|) \\[2ex]
+=\gamma\|\tilde{V}-V\|_{\infty} & \left(\text{since } \max _{s} \sum_{s^{\prime}} T\left(s, s^{\prime}\right)=1\right)
+\end{array}
+$$ 
+\end{itemize}
+    
+\end{frame}
+
+
+
+\section{Converging to Optimal Value}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{Wherever we start, we contract to the optimal value}
+\thispagestyle{empty}
+\end{frame}
+}
+
+
+\begin{frame}{Contraction: Whatever Initial Guess Gets the True Point}
+\begin{figure}
+	\centering
+\begin{tikzpicture}[line width=1.5pt]
+\node[below left] at (0,0) {$0$};
+\draw[{Stealth[length=0.3cm, width=0.3cm]}-{Stealth[length=0.3cm, width=0.3cm]}] (0,6)node[above] {\large $v_{s_2}$} --(0,0) --(9,0) node[right] {\large $v_{s_1}$};
+\draw[line width=2pt] (0,0)--(1.5,2.5) node[xshift=-0.4cm,above] {\textcolor{gray}{guess} $V$};
+\draw[line width=2pt] (2.7,0.8) node[below] {$H(0)$}--(3.1,2.3) node[above] {$H(V)$};
+\draw[line width=2pt] (4.6,1.02)node[below] {$H^2(0)$}--(4.8,1.8) node[above] {$H^2(V)$};
+\draw[fill=black] (7.4,1.1) circle (2pt) node[right=8pt] {$V^{\pi}$} node[above=3pt] {$H^{\infty}(V)$}
+node[below=6pt] {$H^{\infty}(0)$};
+\end{tikzpicture}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Convergence}
+\vspace{-8mm}
+    \begin{itemize}
+        \item \textbf{Theorem 2:} \textcolor{red1}{Policy evaluation converges to $V^{\pi}$}\\ for any initial estimate $V$
+$$
+\textcolor{red1}{\lim_{n \rightarrow \infty} H^{(n)}(V)=V^{\pi} \quad \forall V}
+$$\\
+
+\pause
+
+\item Proof
+
+
+
+\begin{itemize}
+\item By definition $V^{\pi}=H^{(\infty)}(0)$, but policy evaluation computes $H^{(\infty)}(V)$ for any initial $V$\\[2ex]
+\item By Lemma 1, $\left\|H^{(n)}(V)-H^{(n)}(\tilde{V})\right\|_{\infty} \leq \gamma^{n}\|V-\tilde{V}\|_{\infty}$\\[2ex]
+\item Hence, when $n \rightarrow \infty$, then $\left\|H^{(n)}(V)-H^{(n)}(0)\right\|_{\infty} \rightarrow 0$ and $H^{(\infty)}(V)=V^{\pi} \quad \forall V$
+    \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\section{Approximate Policy Evaluation}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{When we stop early, how far are we from the optimal value?}
+\thispagestyle{empty}
+\end{frame}
+}
+
+\begin{frame}{Approximate Policy Evaluation}
+
+\begin{itemize}
+    \item In practice, we can't perform an infinite number of iterations
+
+\item Suppose that we perform value iteration for $n$ steps and $$\left\|H^{(n)}(V)-H^{(n-1)}(V)\right\|_{\infty}=\epsilon,$$\\ 
+\textcolor{red1}{how far is $H^{(n)}(V)$ from $V^{\pi}$}? 
+\end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Contraction}
+\begin{figure}
+	\centering
+\begin{tikzpicture}[line width=1.5pt]
+\node[below left] at (0,0) {$0$};
+\draw[{Stealth[length=0.3cm, width=0.3cm]}-{Stealth[length=0.3cm, width=0.3cm]}] (0,6)node[above] {\large $v_{s_2}$} --(0,0) --(9,0) node[right] {\large $v_{s_1}$};
+\draw [line width=2pt,gray] (0,0) to[out=23,in=185] (5.3,1.06);
+\draw [densely dashed,line width=2pt,gray] (5.3,1.06) to[out=5,in=180] (7.4,1.1);
+\node[above] at (1.3,0.6) {$\epsilon$};
+\draw[fill=black] (2.7,0.8) circle (2pt) node[below=3pt] {$H(0)$} node[xshift=0.8cm,above=7pt,align=center]{$\epsilon \times \gamma$};
+\draw[fill=black] (4.6,1.02) circle (2pt) node[below=3pt] {$H(0)$} node[xshift=0.3cm,above=7pt,align=center]{$\epsilon \times \gamma^2$};
+\draw[fill=black] (5.3,1.06) circle (2pt);
+\draw[fill=black] (7.4,1.1) circle (2pt) node[above=3pt] {$H^{\infty}(V)$}
+node[below=6pt] {$H^{\infty}(0)$};
+\end{tikzpicture}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Approximate Policy Evaluation}
+\footnotesize
+    \begin{itemize}
+        \item \textbf{Theorem 3:} If $\left\|H^{(n)}(V)-H^{(n-1)}(V)\right\|_{\infty} \leq \epsilon$ then
+
+$$
+\textcolor{red1}{\left\|V^{n}-H^{(n)}(V)\right\|_{\infty} \leq \frac{\epsilon}{1-\gamma}}
+$$
+\pause
+
+\item Proof $\left\|V^{\pi}-H^{(n)}(V)\right\|_{\infty}$
+
+$$
+=\left\|H^{(\infty)}(V)-H^{(n)}(V)\right\|_{\infty} \quad(\text{by Theorem 2) }
+$$
+$$
+\begin{aligned}
+& =\left\|\sum_{t=1}^{\infty} H^{(t+n)}(V)-H^{(t+n-1)}(V)\right\|_{\infty} \\
+& \leq\sum_{t=1}^{\infty}\left\|H^{(t+n)}(V)-H^{(t+n-1)}(V)\right\|_{\infty}(\|A+B\| \leq\|A\|+\|B\|)
+\end{aligned}
+$$
+$$=\sum_{t=1}^{\infty} \gamma^{t} \epsilon=\frac{\epsilon}{1-\gamma} \quad \text{(by Lemma 1)} $$
+    \end{itemize}
+\end{frame}
+
+
+
+\section{Optimal Value Function}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{How to find the best policy?}
+\thispagestyle{empty}
+\end{frame}
+}
+
+\begin{frame}{Optimal Value Function}
+
+\begin{itemize}
+		\item Non-linear system of equations
+
+$$
+V_{\infty}^{*}(s)=\max _{a} R(s, a)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) V_{\infty}^{*}\left(s^{\prime}\right) \forall s
+$$
+
+\item Matrix form:
+
+$\textcolor{red1}{R^{a}}:|S| \times 1$ column vector of rewards for $a$
+
+$\textcolor{red1}{V^{*}}:|S| \times 1$ column vector of optimal values
+
+$\textcolor{red1}{T^{a}}:|S| \times|S|$ matrix of transition prob for $a$
+
+$$
+V^{*}=\max _{a} R^{a}+\gamma T^{a} V^{*}
+$$ 
+\end{itemize}
+    
+\end{frame}
+
+
+
+
+\begin{frame}{Contraction with max}
+
+\begin{itemize}
+    \item Even with $\textcolor{red1}{\max _{a}}$ we get a contraction mapping
+		\item Let $\textcolor{red1}{H^{*}(V) \equiv \max _{a} R^{a}+\gamma T^{a} V}$ be the operator in value iteration
+
+\item \textbf{Lemma 4:} $H^{*}$ is a \textcolor{red1}{contraction mapping}.
+
+$$
+\textcolor{red1}{\left\|H^{*}(\tilde{V})-H^{*}(V)\right\|_{\infty} \leq \gamma\|\tilde{V}-V\|_{\infty}}
+$$\\
+
+\pause 
+
+\item Proof: without loss of generality,\\[2ex]
+\begin{itemize}
+    \item let $H^{*}(\tilde{V})(s) \geq H^{*}(V)(s)$ and\\[2ex]
+		\item let $a_{s}^{*}=\operatorname{argmax} \; R(s, a)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) V\left(s^{\prime}\right)$
+\end{itemize}
+
+%$$
+%\tilde{a}_{s}^{*}=\underset{a}{\operatorname{argmax}} R(s, a)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) \tilde{V}\left(s^{\prime}\right)
+%$$ 
+\end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{Contraction with max}
+
+    \begin{itemize}
+        \item Proof continued:
+
+\item Then $0 \leq H^{*}(\tilde{V})(s)-H^{*}(V)(s)$ \quad(by assumption)\\[2ex]
+
+$\leq R\left(s, a_{s}^{*}\right)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a_{s}^{*}\right) \tilde{V}\left(s^{\prime}\right)$\quad(by definition)\\[2ex]
+
+$-R\left(s, a_{s}^{*}\right)-\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a_{s}^{*}\right) V\left(s^{\prime}\right)$\\[2ex]
+
+$=\gamma \sum_{s^{\prime}}\operatorname{Pr}\left(s^{\prime} \mid s, a_{s}^{*}\right) [\tilde{V}(s^{\prime})-V(s^{\prime})]$\\[2ex]
+
+$ \leq \gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, \tilde{a}_{s}^{*}\right)\|\tilde{V}-V\|_{\infty}$ \quad (maxnorm upper bound)\\[2ex]
+
+$=\gamma\|\tilde{V}-V\|_{\infty} \quad\left(\right.$since $\left.\sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a_{s}^{*}\right)=1\right)$\\[2ex]
+
+\item Repeat same argument for $H^{*}(V)(s) \geq H^{*}(\tilde{V})(s)$ and for each $s$ 
+   \end{itemize} 
+\end{frame}
+
+
+
+\begin{frame}{Convergence with max}
+
+
+\begin{itemize}
+    \item \textbf{Theorem 5:} \textcolor{red1}{Value iteration converges to $V^{*}$} for\\ any initial estimate $V$
+$$
+\textcolor{red1}{\lim _{n \rightarrow \infty} H^{*(n)}(V)=V^{*} \; \forall V}
+$$\\
+
+\pause
+
+\item Proof
+
+\begin{itemize}
+\item By definition $V^{*}=H^{*(\infty)}(0)$, but value iteration computes $H^{*(\infty)}(V)$ for some initial $V$\\[2ex]
+\item By Lemma 4, $\left\|H^{*(n)}(V)-H^{*(n)}(\tilde{V})\right\|_{\infty} \leq \gamma^{n}\|V-\tilde{V}\|_{\infty}$\\[2ex]
+\item Hence, when $n \rightarrow \infty$, then $\left\|H^{*(n)}(V)-H^{*(n)}(0)\right\|_{\infty} \rightarrow 0$ and
+
+$
+H^{*(\infty)}(V)=V^{*} \quad\forall V
+$ 
+\end{itemize}
+  \end{itemize}  
+\end{frame}
+
+\begin{frame}{Value Iteration}
+    \begin{itemize}
+        \item Even when horizon is infinite, perform finitely many iterations
+
+\item \textcolor{red1}{Stop when $\left\|V_{n}-V_{n-1}\right\| \leq \epsilon$}
+
+
+
+    
+\begin{tcolorbox}[colframe=black, boxrule=1pt, sharp corners]
+
+\textcolor{red1}{valueIteration(MDP)} 
+
+$V_{0}^{*}(s) \leftarrow \max _{a} R^{a} ; \quad n \leftarrow 0$
+
+Repeat\\
+\hspace*{5mm} $n \leftarrow n+1 $\\
+\hspace*{5mm} $V_{n} \leftarrow \max _{a} R^{a}+\gamma T^{a} V_{n-1}$\\
+Until $\left\|V_{n}-V_{n-1}\right\|_{\infty} \leq \epsilon$\\
+Return $V_{n}$ 
+
+\end{tcolorbox}
+    \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Induced Policy}
+
+\begin{itemize}
+    \item Since $\left\|V_{n}-V_{n-1}\right\|_{\infty} \leq \epsilon$,\\ by Theorem 5: we know that $\left\|V_{n}-V^{*}\right\|_{\infty} \leq \frac{\epsilon}{1-\gamma}$\\[2ex]
+
+\item But, how good is the stationary policy $\pi_{n}(s)$\\ extracted based on $V_{n}$?\\[2ex]
+
+\item $\pi_{n}(s)=\underset{a}{\operatorname{argmax}} \; R(s, a)+\gamma \sum_{s^{\prime}} \operatorname{Pr}\left(s^{\prime} \mid s, a\right) V_{n}\left(s^{\prime}\right)$\\[2ex]
+
+\item How far is $V^{\pi_{n}}$ from $V^{*}$? 
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Induced Policy}
+\vspace{-20mm}
+    \begin{itemize}
+        \item \textbf{Theorem 6:} \textcolor{red1}{$\left\|V^{\pi_{n}}-V^{*}\right\|_{\infty} \leq \frac{2 \epsilon}{1-\gamma}$}\\[2ex]
+
+\pause
+
+\item Proof
+
+$\left\|V^{\pi_{n}}-V^{*}\right\|_{\infty}=\left\|V^{\pi_{n}}-V_{n}+V_{n}-V^{*}\right\|_{\infty}$\\[2ex]
+
+$\leq\left\|V^{\pi_{n}}-V_{n}\right\|_{\infty}+\left\|V_{n}-V^{*}\right\|_{\infty} \quad(\|A+B\| \leq\|A\|+\|B\|)$\\[2ex]
+
+$=\left\|H^{\pi_{n}(\infty)}\left(V_{n}\right)-V_{n}\right\|_{\infty}+\left\|V_{n}-H^{*(\infty)}\left(V_{n}\right)\right\|_{\infty}$\\[2ex]
+
+$\leq \frac{\epsilon}{1-\gamma}+\frac{\epsilon}{1-\gamma} \quad$ (by Theorems 2 and 5)\\[2ex]
+
+$=\frac{2 \epsilon}{1-\gamma}$ 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary Value Iteration Algorithm}
+
+    \begin{itemize}
+        \item Value iteration
+
+        \begin{itemize}
+                     
+\item Simple dynamic programming algorithm\\[2ex]
+\item Complexity: \textcolor{red1}{$\mathcal{O}\left(n|A||S|^{2}\right)$}\\[2ex]
+\item[] 
+\begin{itemize}
+	\item Here $n$ is the number of iterations,\\[2ex]
+	\item $A$ number of actions,\\[2ex]
+	\item $S$ number of states
+\end{itemize}
+    \end{itemize}
+
+
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t,allowframebreaks
+]%\nocite{*}
+\frametitle{References}
+\small
+\bibliography{bib}
+\end{frame}
+\section{Takeaways}
+{
+\setbeamercolor{background canvas}{bg=BrewerBlue}
+\begin{frame}
+\centering
+\Huge
+\textcolor{white}{Takeaways}
+\thispagestyle{empty}
+\end{frame}
+}
+
+\begin{frame}{How Does the Value Iteration Algorithm Work?}
+\begin{itemize}
+ \item Repeatedly applies the Bellman optimality update to converge to \(V^*\)
+  \item Approximate solutions in infinite‐horizon settings:\\
+	Can stop early (threshold on update size)
+  \item Policy error decreases each iteration
+\end{itemize}
+\end{frame}
+
+
+\end{document}

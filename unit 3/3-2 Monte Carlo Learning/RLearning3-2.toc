@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Monte Carlo Learning}{2}{0}{1}
+\beamer@sectionintoc {2}{Monte Carlo Evaluation}{8}{0}{2}
+\beamer@sectionintoc {3}{Monte Carlo Control}{24}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{27}{0}{4}

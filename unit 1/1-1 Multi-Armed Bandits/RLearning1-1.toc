@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Multi-Armed Bandits}{2}{0}{1}
+\beamer@sectionintoc {2}{Bandit Algorithms}{15}{0}{2}
+\beamer@sectionintoc {3}{Bandits in Practice}{50}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{53}{0}{4}

@@ -1,0 +1,18 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Goodfellow, Bengio, and Courville]{Goodfellow, Bengio, and
+  Courville}{2016}{goodfellow2016deep}
+\textsc{Goodfellow, I., Y.~Bengio,  {\small and} A.~Courville}  (2016):
+  \emph{Deep learning}, vol. 196. MIT press, Available at
+  \url{http://deeplearningbook.org/}.
+
+\end{thebibliography}

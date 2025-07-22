@@ -1,0 +1,8 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Introduction to Reinforcement Learning}{2}{0}{1}
+\beamer@sectionintoc {2}{Stochastic Gradient Policy with a Baseline}{4}{0}{2}
+\beamer@sectionintoc {3}{REINFORCE Algorithm with a baseline}{7}{0}{3}
+\beamer@sectionintoc {4}{Advantage Actor Critic (A2C)}{13}{0}{4}
+\beamer@sectionintoc {5}{Deterministic Gradient Policy}{15}{0}{5}
+\beamer@sectionintoc {6}{Deterministic Policy Gradient (DPG)}{17}{0}{6}
+\beamer@sectionintoc {8}{Takeaways}{20}{0}{7}

@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Inference with Batched Bandits}{2}{0}{1}
+\beamer@sectionintoc {2}{Batchwise Data Collection}{6}{0}{2}
+\beamer@sectionintoc {3}{Batched Bandits in Practice}{22}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{31}{0}{4}

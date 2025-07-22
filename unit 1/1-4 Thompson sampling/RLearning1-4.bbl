@@ -1,0 +1,66 @@
+\ifx\undefined\BySame
+\newcommand{\BySame}{\leavevmode\rule[.5ex]{3em}{.5pt}\ }
+\fi
+\ifx\undefined\textsc
+\newcommand{\textsc}[1]{{\sc #1}}
+\newcommand{\emph}[1]{{\em #1\/}}
+\let\tmpsmall\small
+\renewcommand{\small}{\tmpsmall\sc}
+\fi
+\begin{thebibliography}{}
+
+\harvarditem[Agarwal, Long, Traupman, Xin, and Zhang]{Agarwal, Long, Traupman,
+  Xin, and Zhang}{2014}{Agarwal2014}
+\textsc{Agarwal, D., B.~Long, J.~Traupman, D.~Xin,  {\small and} L.~Zhang}
+  (2014): ``LASER: A Scalable Response Prediction Platform for Online
+  Advertising,'' in \emph{Proceedings of the 7th ACM International Conference
+  on Web Search and Data Mining}, WSDM '14, p. 173–182, New York, NY, USA.
+  Association for Computing Machinery.
+
+\harvarditem[Chapelle and Li]{Chapelle and Li}{2011}{Chapelle2011}
+\textsc{Chapelle, O.,  {\small and} L.~Li}  (2011): ``An Empirical Evaluation
+  of Thompson Sampling,'' in \emph{Advances in Neural Information Processing
+  Systems}, ed. by J.~Shawe-Taylor, R.~Zemel, P.~Bartlett, F.~Pereira,  {\small
+  and} K.~Weinberger, vol.~24. Curran Associates, Inc.
+
+\harvarditem[Graepel, Candela, Borchert, and Herbrich]{Graepel, Candela,
+  Borchert, and Herbrich}{2010}{Graepel2010}
+\textsc{Graepel, T., J.~Q. Candela, T.~Borchert,  {\small and} R.~Herbrich}
+  (2010): ``Web-scale Bayesian click-through rate prediction for sponsored
+  search advertising in Microsoft's Bing search engine,'' in \emph{Proceedings
+  of the 27th International Conference on International Conference on Machine
+  Learning (ICML '10)}, pp. 13--20. Omnipress, Madison, WI, USA,.
+
+\harvarditem[Hill, Nassif, Liu, Iyer, and Vishwanathan]{Hill, Nassif, Liu,
+  Iyer, and Vishwanathan}{2017}{Hill_2017}
+\textsc{Hill, D.~N., H.~Nassif, Y.~Liu, A.~Iyer,  {\small and} S.~Vishwanathan}
+   (2017): ``An Efficient Bandit Algorithm for Realtime Multivariate
+  Optimization,'' in \emph{Proceedings of the 23rd ACM SIGKDD International
+  Conference on Knowledge Discovery and Data Mining}, KDD ’17. ACM.
+
+\harvarditem[Russo, Van~Roy, Kazerouni, Osband, Wen, et~al.]{Russo, Van~Roy,
+  Kazerouni, Osband, Wen, et~al.}{2018}{russo2018tutorial}
+\textsc{Russo, D.~J., B.~Van~Roy, A.~Kazerouni, I.~Osband, Z.~Wen,  et~al.}
+  (2018): ``A tutorial on thompson sampling,'' \emph{Foundations and
+  Trends{\textregistered} in Machine Learning}, 11(1), 1--96.
+
+\harvarditem[Scott]{Scott}{2010}{Scott2010}
+\textsc{Scott, S.~L.}  (2010): ``A modern Bayesian look at the multi-armed
+  bandit,'' \emph{Applied Stochastic Models in Business and Industry}, 26(6),
+  639--658.
+
+\harvarditem[Scott]{Scott}{2015}{Scott2015}
+\textsc{Scott, S.~L.}  (2015): ``Multi-armed bandit experiments in the online
+  service economy,'' \emph{Applied Stochastic Models in Business and Industry},
+  31(1), 37--45.
+
+\harvarditem[Thompson]{Thompson}{1933}{Thompson1933}
+\textsc{Thompson, W.~R.}  (1933): ``On the likelihood that one unknown
+  probability exceeds another in view of the evidence of two samples,''
+  \emph{Biometrika}, 25(3-4), 285--294.
+
+\harvarditem[Thompson]{Thompson}{1935}{Thompson1935}
+\textsc{Thompson, W.~R.}  (1935): ``On the Theory of Apportionment,''
+  \emph{American Journal of Mathematics}, 57(2), 450--456.
+
+\end{thebibliography}

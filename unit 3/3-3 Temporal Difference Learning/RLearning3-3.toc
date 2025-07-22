@@ -1,0 +1,5 @@
+\babel@toc {english}{}\relax 
+\beamer@sectionintoc {1}{Temporal Difference Learning}{2}{0}{1}
+\beamer@sectionintoc {2}{Temporal Difference Evaluation}{11}{0}{2}
+\beamer@sectionintoc {3}{Temporal Difference Control}{15}{0}{3}
+\beamer@sectionintoc {5}{Takeaways}{19}{0}{4}
